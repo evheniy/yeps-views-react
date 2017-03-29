@@ -1,6 +1,6 @@
 {
   "name": "yeps-views-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "YEPS React Views",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,12 @@
     "easy",
     "parser",
     "json",
-    "react"
+    "react",
+    "babel",
+    "latest",
+    "es2015",
+    "es6",
+    "jsx"
   ],
   "author": "Evheniy Bystrov",
   "license": "MIT",
@@ -69,6 +74,7 @@
     "babel-preset-react": "^6.23.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "yeps": "^1.0.0"
+    "yeps": "^1.0.0",
+    "yeps-views-template": "^1.0.0"
   }
 }

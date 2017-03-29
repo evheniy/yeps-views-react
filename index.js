@@ -1,4 +1,5 @@
 const debug = require('debug')('yeps:views:react');
+const template = require('yeps-views-template');
 const { resolve } = require('path');
 const ReactDOM = require('react-dom/server');
 const extensions = ['.es6', '.es', '.jsx', '.js'];
@@ -10,15 +11,10 @@ module.exports = (viewsPath, options = { presets, extensions }) => async context
     debug('viewsPath: %s', viewsPath);
     debug(options);
 
-    context.renderToString = async (path, parameters) => {
+    require('babel-register')(Object.assign({ only: viewsPath }, options));
 
-        debug('renderToString');
-        debug('path: %s', path);
-        debug(parameters);
-
+    return template(context, async (path, parameters) => {
         try {
-
-            require('babel-register')(Object.assign({ only: viewsPath }, options));
 
             const component = require(resolve(viewsPath, path));
             debug(component);
@@ -29,21 +25,10 @@ module.exports = (viewsPath, options = { presets, extensions }) => async context
             return html;
 
         } catch (error) {
+
             debug(error);
 
             throw error;
         }
-    };
-
-    context.render = async (path, parameters) => {
-
-        debug('render');
-        debug('path: %s', path);
-        debug(parameters);
-
-        context.statusCode = 200;
-        context.res.end(await context.renderToString(path, parameters));
-
-        return Promise.resolve();
-    };
+    });
 };
